@@ -1,0 +1,49 @@
+# Built artifacts
+bin/
+gen/
+out/
+build/
+.gradle/
+
+# IDE settings
+.idea/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+.nbpackage/
+
+# Local configuration
+local.properties
+.DS_Store
+Thumbs.db
+
+# Android Specific
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.ap_
+*.dex
+.navigation/
+
+# Log files
+*.log
+
+# Gradle
+.gradle/
+build/
+
+# Signing files
+*.jks
+*.keystore
+*.p12
+
+# Optional: Avoid committing the Gradle wrapper if you want people to use their local Gradle 
+# (though standard practice is to include it for consistency).
+# gradlew
+# gradlew.bat
+# gradle/wrapper/gradle-wrapper.jar
+# gradle/wrapper/gradle-wrapper.properties
