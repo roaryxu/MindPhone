@@ -28,6 +28,8 @@ captures/
 *.ap_
 *.dex
 .navigation/
+release/
+debug/
 
 # Log files
 *.log
