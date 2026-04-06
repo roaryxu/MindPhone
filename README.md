@@ -36,7 +36,7 @@ If you're viewing this page on your Android device, you can install MindPhone im
 #### 🛠 Build from Source
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/MindPhone.git
+   git clone https://github.com/roaryxu/MindPhone.git
    ```
 2. Open the project in **Android Studio**.
 3. Build the project and run it on your device/emulator.
