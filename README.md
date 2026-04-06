@@ -6,7 +6,7 @@
 
 **MindPhone** is a premium, high-performance, minimalist Android launcher designed to reclaim your focus. By stripping away distractions and focusing on a clean, search-driven interface, MindPhone turns your smartphone back into a tool, not a slot machine.
 
-![MindPhone Mockup](https://raw.githubusercontent.com/username/MindPhone/main/assets/mockup.png)
+![Screenshot](https://raw.githubusercontent.com/roaryxu/MindPhone/main/assets/screenshot.png)
 
 ## ✨ Features
 
@@ -27,7 +27,7 @@
 
 #### 📦 Direct APK (Easiest for Mobile)
 If you're viewing this page on your Android device, you can install MindPhone immediately:
-1. Navigate to the [**Releases**](https://github.com/yourusername/MindPhone/releases) page.
+1. Navigate to the [**Releases**](https://github.com/roaryxu/MindPhone/releases) page.
 2. Download the latest `app-debug.apk` directly to your phone.
 3. Open the downloaded file. If prompted, allow "Install from Unknown Sources" for your browser.
 4. Once installed, press the **Home** button on your device and select **MindPhone** as your default launcher.
@@ -51,8 +51,8 @@ If you're viewing this page on your Android device, you can install MindPhone im
 ## 🎨 Design Philosophy
 MindPhone follows a "Focus-First" design philosophy:
 - **No Icons on Home**: Text-based lists reduce the visual "pull" of addictive apps.
-- **Haptic Feedback**: Subtle vibrates (where supported) for navigation.
-- **Warm Accents**: Using `#C48B6C` (Warm Sienna) to provide a soft, premium feel without the eye strain of harsh blues or greens.
+- **Haptic Feedback**: Subtle vibrations (where supported) for navigation.
+- **Easter Egg**: Hold down the drawer icon to cycle through 3 different colour accents.
 
 ## 🤝 Contributing
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -67,4 +67,4 @@ Contributions are what make the open-source community such an amazing place to l
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-*Completely vibe-coded and sharing for free because focus belongs to everyone.*
+*Sharing for free because mindfulness belongs to everyone.*

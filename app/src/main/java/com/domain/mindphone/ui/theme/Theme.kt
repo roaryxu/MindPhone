@@ -26,9 +26,10 @@ private val DarkColorScheme = darkColorScheme(
 
 @Composable
 fun MindPhoneTheme(
+    primaryColor: androidx.compose.ui.graphics.Color = WarmSienna,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = DarkColorScheme
+    val colorScheme = DarkColorScheme.copy(primary = primaryColor)
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {

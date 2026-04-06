@@ -1,4 +1,6 @@
 package com.domain.mindphone
+import androidx.compose.ui.graphics.Color
+import com.domain.mindphone.ui.theme.WarmSienna
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -36,7 +38,11 @@ class HomeActivity : ComponentActivity() {
         appRepository = PackageManagerAppRepository(applicationContext)
 
         setContent {
-            MindPhoneTheme {
+            val colors = listOf(WarmSienna, Color(0xFFA7B5C8), Color(0xFFFFFFFF))
+            var colorIndex by remember { mutableStateOf(0) }
+            val primaryColor = colors[colorIndex]
+
+            MindPhoneTheme(primaryColor = primaryColor) {
                 val allApps by appRepository.getInstalledApps().collectAsState(initial = emptyList())
                 val favoriteApps = allApps.filter { it.isFavorite }
                 
@@ -53,7 +59,8 @@ class HomeActivity : ComponentActivity() {
                         } else {
                             HomeScreen(
                                 favoriteApps = favoriteApps,
-                                onNavigateToDrawer = { showDrawer = true }
+                                onNavigateToDrawer = { showDrawer = true },
+                                onAppListHold = { colorIndex = (colorIndex + 1) % colors.size }
                             )
                         }
                     }

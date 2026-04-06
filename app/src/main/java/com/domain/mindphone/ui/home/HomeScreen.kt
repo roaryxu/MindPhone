@@ -49,7 +49,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomeScreen(
     favoriteApps: List<AppInfo>,
-    onNavigateToDrawer: () -> Unit
+    onNavigateToDrawer: () -> Unit,
+    onAppListHold: () -> Unit = {}
 ) {
     val context = LocalContext.current
     
@@ -121,11 +122,47 @@ fun HomeScreen(
             BottomIconDock()
         }
         
-        IconButton(
-            onClick = onNavigateToDrawer,
+        var isHoldingAppList by remember { mutableStateOf(false) }
+        var holdProgressAppList by remember { mutableFloatStateOf(0f) }
+
+        LaunchedEffect(isHoldingAppList) {
+            if (isHoldingAppList) {
+                while (holdProgressAppList < 1f) {
+                    delay(16)
+                    holdProgressAppList += 16f / 3000f
+                }
+                if (holdProgressAppList >= 1f) {
+                    isHoldingAppList = false
+                    holdProgressAppList = 0f
+                    onAppListHold()
+                }
+            } else {
+                holdProgressAppList = 0f
+            }
+        }
+
+        val scaleAppList by animateFloatAsState(targetValue = if (isHoldingAppList) 0.85f else 1f)
+
+        Box(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(bottom = 100.dp) 
+                .padding(bottom = 100.dp)
+                .size(48.dp)
+                .scale(scaleAppList)
+                .clip(CircleShape)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            isHoldingAppList = true
+                            tryAwaitRelease()
+                            isHoldingAppList = false
+                        },
+                        onTap = {
+                            onNavigateToDrawer()
+                        }
+                    )
+                },
+            contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = Icons.Rounded.Apps,

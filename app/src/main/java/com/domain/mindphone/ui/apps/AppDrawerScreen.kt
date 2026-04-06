@@ -103,6 +103,7 @@ fun AppDrawerScreen(
                     appInfo = app,
                     onClick = {
                         app.launchIntent?.let { context.startActivity(it) }
+                        searchQuery = ""
                     },
                     onFavoriteToggle = {
                         coroutineScope.launch {
