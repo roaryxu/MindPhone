@@ -29,7 +29,7 @@
 #### 📦 Direct APK (Easiest for Mobile)
 If you're viewing this page on your Android device, you can install MindPhone immediately:
 1. Navigate to the [**Releases**](https://github.com/roaryxu/MindPhone/releases) page.
-2. Download the latest `app-debug.apk` directly to your phone.
+2. Download the latest `.apk` directly to your phone.
 3. Open the downloaded file. If prompted, allow "Install from Unknown Sources" for your browser.
 4. Once installed, press the **Home** button on your device and select **MindPhone** as your default launcher.
 
