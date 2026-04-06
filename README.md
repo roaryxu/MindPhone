@@ -6,7 +6,8 @@
 
 **MindPhone** is a premium, high-performance, minimalist Android launcher designed to reclaim your focus. By stripping away distractions and focusing on a clean, search-driven interface, MindPhone turns your smartphone back into a tool, not a slot machine.
 
-![Screenshot](https://raw.githubusercontent.com/roaryxu/MindPhone/main/assets/screenshot.png)
+![Screenshot](https://github.com/user-attachments/assets/ab8717a4-b17c-403d-b68e-eee7220e5763)
+
 
 ## ✨ Features
 
