@@ -17,6 +17,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -66,33 +68,50 @@ fun AppDrawerScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(top = 48.dp, start = 24.dp, end = 24.dp)
     ) {
-        BasicTextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
-            textStyle = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 24.sp,
-                fontFamily = InterLike,
-                fontWeight = FontWeight.SemiBold
-            ),
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-            decorationBox = { innerTextField ->
-                if (searchQuery.isEmpty()) {
-                    Text(
-                        text = "Search apps...",
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
-                        fontSize = 24.sp,
-                        fontFamily = InterLike,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-                innerTextField()
-            },
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp)
-                .focusRequester(focusRequester)
-        )
+                .padding(bottom = 32.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            BasicTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                textStyle = TextStyle(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 24.sp,
+                    fontFamily = InterLike,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                decorationBox = { innerTextField ->
+                    if (searchQuery.isEmpty()) {
+                        Text(
+                            text = "Search apps...",
+                            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
+                            fontSize = 24.sp,
+                            fontFamily = InterLike,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    innerTextField()
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .focusRequester(focusRequester)
+            )
+
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier.padding(start = 8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Close,
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
+            }
+        }
 
         LazyColumn(
             modifier = Modifier.weight(1f),
