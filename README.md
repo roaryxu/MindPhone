@@ -6,7 +6,8 @@
 
 **MindPhone** is a premium, high-performance, minimalist Android launcher designed to reclaim your focus. By stripping away distractions and focusing on a clean, search-driven interface, MindPhone turns your smartphone back into a tool, not a slot machine.
 
-![Screenshot](https://raw.githubusercontent.com/roaryxu/MindPhone/main/assets/screenshot.png)
+![Screenshot](https://github.com/user-attachments/assets/ab8717a4-b17c-403d-b68e-eee7220e5763)
+
 
 ## ✨ Features
 
@@ -28,14 +29,14 @@
 #### 📦 Direct APK (Easiest for Mobile)
 If you're viewing this page on your Android device, you can install MindPhone immediately:
 1. Navigate to the [**Releases**](https://github.com/roaryxu/MindPhone/releases) page.
-2. Download the latest `app-debug.apk` directly to your phone.
+2. Download the latest `.apk` directly to your phone.
 3. Open the downloaded file. If prompted, allow "Install from Unknown Sources" for your browser.
 4. Once installed, press the **Home** button on your device and select **MindPhone** as your default launcher.
 
 #### 🛠 Build from Source
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/MindPhone.git
+   git clone https://github.com/roaryxu/MindPhone.git
    ```
 2. Open the project in **Android Studio**.
 3. Build the project and run it on your device/emulator.
