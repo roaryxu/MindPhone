@@ -47,6 +47,16 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    
+    // Disable aapt2 compression for .litertlm files
+    // This allows MediaPipe to read the model straight from the APK assets 
+    // without inflating memory requirements during build!
+    androidResources {
+        noCompress += "litertlm"
+        noCompress += "tflite"
+        noCompress += "bin"
+        // Remove ignoreAssetsPattern as it completely removes the file from the APK!
+    }
 }
 
 dependencies {
@@ -60,6 +70,9 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    
+    // MediaPipe Tasks GenAI for LLM Inference
+    implementation("com.google.mediapipe:tasks-genai:0.10.35")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

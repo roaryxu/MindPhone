@@ -44,7 +44,8 @@ import kotlinx.coroutines.launch
 fun AppDrawerScreen(
     allApps: List<AppInfo>,
     appRepository: AppRepository,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onAppClick: (AppInfo) -> Unit = {}
 ) {
     BackHandler { onBack() }
     
@@ -121,7 +122,7 @@ fun AppDrawerScreen(
                 AppDrawerItem(
                     appInfo = app,
                     onClick = {
-                        app.launchIntent?.let { context.startActivity(it) }
+                        onAppClick(app)
                         searchQuery = ""
                     },
                     onFavoriteToggle = {

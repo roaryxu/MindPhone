@@ -9,17 +9,12 @@ import android.os.BatteryManager
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -36,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
@@ -50,7 +44,9 @@ import kotlinx.coroutines.delay
 fun HomeScreen(
     favoriteApps: List<AppInfo>,
     onNavigateToDrawer: () -> Unit,
-    onAppListHold: () -> Unit = {}
+    onNavigateToChat: () -> Unit = {},
+    onAppListHold: () -> Unit = {},
+    onAppClick: (AppInfo) -> Unit = {}
 ) {
     val context = LocalContext.current
     
@@ -109,9 +105,7 @@ fun HomeScreen(
                         AppListItem(
                             appInfo = app,
                             onClick = {
-                                app.launchIntent?.let {
-                                    context.startActivity(it)
-                                }
+                                onAppClick(app)
                             }
                         )
                     }
@@ -120,6 +114,24 @@ fun HomeScreen(
             
             Spacer(modifier = Modifier.height(24.dp))
             BottomIconDock()
+        }
+
+        // Persona Tester Chat Bot
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(bottom = 180.dp) // Placed between App List and top
+                .size(48.dp)
+                .clip(CircleShape)
+                .clickable { onNavigateToChat() },
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.SmartToy,
+                contentDescription = "Test Persona",
+                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
+                modifier = Modifier.size(28.dp)
+            )
         }
         
         var isHoldingAppList by remember { mutableStateOf(false) }
