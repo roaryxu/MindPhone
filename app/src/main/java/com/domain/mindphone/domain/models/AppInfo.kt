@@ -13,5 +13,6 @@ data class AppInfo(
     val icon: Drawable?,
     val launchIntent: Intent?,
     val isHidden: Boolean = false,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val isGatekept: Boolean = false
 )

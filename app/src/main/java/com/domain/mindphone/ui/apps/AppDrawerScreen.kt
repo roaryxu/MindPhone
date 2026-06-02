@@ -1,7 +1,5 @@
 package com.domain.mindphone.ui.apps
 
-import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -19,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -129,6 +129,11 @@ fun AppDrawerScreen(
                         coroutineScope.launch {
                             appRepository.setAppFavorite(app.packageName, !app.isFavorite)
                         }
+                    },
+                    onGatekeptToggle = {
+                        coroutineScope.launch {
+                            appRepository.setAppGatekept(app.packageName, !app.isGatekept)
+                        }
                     }
                 )
             }
@@ -140,7 +145,8 @@ fun AppDrawerScreen(
 fun AppDrawerItem(
     appInfo: AppInfo,
     onClick: () -> Unit,
-    onFavoriteToggle: () -> Unit
+    onFavoriteToggle: () -> Unit,
+    onGatekeptToggle: () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -168,27 +174,41 @@ fun AppDrawerItem(
             modifier = Modifier.weight(1f)
         )
         
-        // Favorite toggle circle
+        // Gatekept toggle icon (Rounded rectangle)
         Box(
             modifier = Modifier
-                .size(24.dp)
-                .clip(CircleShape)
-                .clickable { onFavoriteToggle() }
-                .padding(4.dp)
+                .size(36.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .clickable { onGatekeptToggle() }
+                .padding(8.dp)
         ) {
-            if (appInfo.isFavorite) {
+            if (appInfo.isGatekept) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.White, CircleShape)
+                        .background(Color.White, RoundedCornerShape(4.dp))
                 )
             } else {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .border(1.5.dp, Color.White.copy(alpha = 0.5f), CircleShape)
+                        .border(1.5.dp, Color.White.copy(alpha = 0.5f), RoundedCornerShape(4.dp))
                 )
             }
         }
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        // Favorite toggle icon (Star)
+        Icon(
+            imageVector = if (appInfo.isFavorite) Icons.Rounded.Star else Icons.Rounded.StarBorder,
+            contentDescription = "Toggle Favorite",
+            tint = if (appInfo.isFavorite) Color.White else Color.White.copy(alpha = 0.5f),
+            modifier = Modifier
+                .size(36.dp)
+                .clip(CircleShape)
+                .clickable { onFavoriteToggle() }
+                .padding(6.dp)
+        )
     }
 }

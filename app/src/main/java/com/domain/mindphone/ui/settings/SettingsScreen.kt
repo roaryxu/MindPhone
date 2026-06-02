@@ -1,4 +1,4 @@
-package com.domain.mindphone.ui.chat
+package com.domain.mindphone.ui.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,9 +20,9 @@ import com.domain.mindphone.domain.llm.GoalOptions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatScreen(
+fun SettingsScreen(
     onNavigateBack: () -> Unit,
-    viewModel: ChatViewModel = viewModel()
+    viewModel: SettingsViewModel = viewModel()
 ) {
     val activePersona by viewModel.activePersona.collectAsState()
     val selectedGoals by viewModel.selectedGoals.collectAsState()
@@ -31,7 +31,7 @@ fun ChatScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(top = 48.dp)
+            .statusBarsPadding()
     ) {
         // Header
         Row(
@@ -44,7 +44,7 @@ fun ChatScreen(
                 Icon(Icons.Rounded.ArrowBack, contentDescription = "Back", tint = Color.White)
             }
             Text(
-                text = "Persona & Goals",
+                text = "Settings",
                 style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                 color = Color.White,
                 modifier = Modifier.weight(1f)
@@ -91,7 +91,7 @@ fun ChatScreen(
             }
 
             Spacer(modifier = Modifier.height(32.dp))
-            Text("Active Goals (Multi-select)", color = Color.White, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
+            Text("Your Goals (Multi-select)", color = Color.White, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(16.dp))
 
             GoalOptions.options.forEach { goal ->

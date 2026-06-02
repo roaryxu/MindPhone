@@ -48,14 +48,12 @@ android {
         }
     }
     
-    // Disable aapt2 compression for .litertlm files
-    // This allows MediaPipe to read the model straight from the APK assets 
-    // without inflating memory requirements during build!
+    // Disable aapt2 compression for model files
     androidResources {
         noCompress += "litertlm"
         noCompress += "tflite"
         noCompress += "bin"
-        // Remove ignoreAssetsPattern as it completely removes the file from the APK!
+        noCompress += "task" // Disable compression for the new .task model
     }
 }
 

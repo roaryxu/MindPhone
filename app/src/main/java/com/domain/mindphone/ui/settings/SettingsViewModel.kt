@@ -1,4 +1,4 @@
-package com.domain.mindphone.ui.chat
+package com.domain.mindphone.ui.settings
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class ChatViewModel(application: Application) : AndroidViewModel(application) {
+class SettingsViewModel(application: Application) : AndroidViewModel(application) {
     private val llmManager = MindfulLlmManager(application)
 
     private val _activePersona = MutableStateFlow(llmManager.getActivePersona())
