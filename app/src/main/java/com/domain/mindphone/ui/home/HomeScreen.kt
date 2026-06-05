@@ -44,7 +44,7 @@ import kotlinx.coroutines.delay
 fun HomeScreen(
     favoriteApps: List<AppInfo>,
     onNavigateToDrawer: () -> Unit,
-    onNavigateToChat: () -> Unit = {},
+    onNavigateToSettings: () -> Unit = {},
     onAppListHold: () -> Unit = {},
     onAppClick: (AppInfo) -> Unit = {}
 ) {
@@ -66,7 +66,8 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(top = 48.dp, bottom = 48.dp, start = 24.dp, end = 24.dp)
+            .statusBarsPadding()
+            .padding(bottom = 48.dp, start = 24.dp, end = 24.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -116,21 +117,24 @@ fun HomeScreen(
             BottomIconDock()
         }
 
-        // Persona Tester Chat Bot
+        // Settings Button (Matches the gatekeeping toggle icon style in app list)
         Box(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(bottom = 180.dp) // Placed between App List and top
                 .size(48.dp)
                 .clip(CircleShape)
-                .clickable { onNavigateToChat() },
+                .clickable { onNavigateToSettings() },
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = Icons.Rounded.SmartToy,
-                contentDescription = "Test Persona",
-                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
-                modifier = Modifier.size(28.dp)
+            Box(
+                modifier = Modifier
+                    .size(20.dp)
+                    .border(
+                        width = 1.5.dp,
+                        color = Color.White.copy(alpha = 0.5f),
+                        shape = RoundedCornerShape(4.dp)
+                    )
             )
         }
         

@@ -14,10 +14,9 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.domain.mindphone.data.repository.PackageManagerAppRepository
-import com.domain.mindphone.domain.config.MindfulAppConfig
 import com.domain.mindphone.domain.models.AppInfo
 import com.domain.mindphone.ui.apps.AppDrawerScreen
-import com.domain.mindphone.ui.chat.ChatScreen
+import com.domain.mindphone.ui.settings.SettingsScreen
 import com.domain.mindphone.ui.gatekeeper.GatekeeperScreen
 import com.domain.mindphone.ui.home.HomeScreen
 import com.domain.mindphone.ui.theme.MindPhoneTheme
@@ -48,11 +47,11 @@ class HomeActivity : ComponentActivity() {
                 val favoriteApps = allApps.filter { it.isFavorite }
                 
                 var showDrawer by remember { mutableStateOf(false) }
-                var showChat by remember { mutableStateOf(false) }
+                var showSettings by remember { mutableStateOf(false) }
                 var gatekeeperTargetApp by remember { mutableStateOf<AppInfo?>(null) }
 
                 val onAppClick: (AppInfo) -> Unit = { app ->
-                    if (MindfulAppConfig.isProblematicApp(app.packageName)) {
+                    if (app.isGatekept) {
                         gatekeeperTargetApp = app
                     } else {
                         app.launchIntent?.let { startActivity(it) }
@@ -62,8 +61,8 @@ class HomeActivity : ComponentActivity() {
 
                 Surface(modifier = Modifier.fillMaxSize()) {
                     Box(modifier = Modifier.fillMaxSize()) {
-                        if (showChat) {
-                            ChatScreen(onNavigateBack = { showChat = false })
+                        if (showSettings) {
+                            SettingsScreen(onNavigateBack = { showSettings = false })
                         } else if (gatekeeperTargetApp != null) {
                             BackHandler { gatekeeperTargetApp = null }
                             GatekeeperScreen(
@@ -88,7 +87,7 @@ class HomeActivity : ComponentActivity() {
                             HomeScreen(
                                 favoriteApps = favoriteApps,
                                 onNavigateToDrawer = { showDrawer = true },
-                                onNavigateToChat = { showChat = true },
+                                onNavigateToSettings = { showSettings = true },
                                 onAppListHold = { colorIndex = (colorIndex + 1) % colors.size },
                                 onAppClick = onAppClick
                             )

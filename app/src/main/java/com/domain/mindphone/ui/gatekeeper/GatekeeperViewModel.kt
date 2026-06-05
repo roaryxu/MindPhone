@@ -1,6 +1,7 @@
 package com.domain.mindphone.ui.gatekeeper
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.domain.mindphone.domain.llm.MindfulLlmManager
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.File
 
 sealed class GatekeeperState {
     object LoadingModel : GatekeeperState()
@@ -18,6 +20,7 @@ sealed class GatekeeperState {
 
 class GatekeeperViewModel(application: Application) : AndroidViewModel(application) {
     private val llmManager = MindfulLlmManager(application)
+    private val context = application
 
     private val _uiState = MutableStateFlow<GatekeeperState>(GatekeeperState.LoadingModel)
     val uiState: StateFlow<GatekeeperState> = _uiState.asStateFlow()
@@ -29,9 +32,11 @@ class GatekeeperViewModel(application: Application) : AndroidViewModel(applicati
                 llmManager.loadModel()
                 _uiState.value = GatekeeperState.AwaitingInput
             } catch (e: Exception) {
+                val errorMsg = e.stackTraceToString()
+                File(context.filesDir, "last_error.txt").writeText(errorMsg)
                 _uiState.value = GatekeeperState.Result(
                     isAllowed = false, 
-                    message = "Could not load mindful model. Consider taking a deep breath instead."
+                    message = "Could not load mindful model. Exception: ${e.message}"
                 )
             }
         }
@@ -43,8 +48,6 @@ class GatekeeperViewModel(application: Application) : AndroidViewModel(applicati
             try {
                 val response = llmManager.evaluateReason(appName, reason)
                 
-                // More forgiving parsing: check if the string contains the allow keyword anywhere,
-                // just in case the model adds leading spaces, newlines, or extra text.
                 val isAllowed = response.contains("DECISION: ALLOW", ignoreCase = true)
                 
                 val message = if (!isAllowed) {

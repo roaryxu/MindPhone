@@ -10,10 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 
-/**
- * Implementation of [AppRepository] that reads directly from the device's PackageManager.
- * WHY: As an Android launcher, we need to query the OS for all resolvable MAIN/LAUNCHER intents.
- */
 class PackageManagerAppRepository(
     private val context: Context
 ) : AppRepository {
@@ -32,12 +28,17 @@ class PackageManagerAppRepository(
         return prefs.getStringSet("favorite_apps", emptySet())?.toMutableSet() ?: mutableSetOf()
     }
 
+    private fun getGatekeptApps(): MutableSet<String> {
+        return prefs.getStringSet("gatekept_apps", emptySet())?.toMutableSet() ?: mutableSetOf()
+    }
+
+    private val defaultProblematicApps = setOf("youtube", "tiktok", "facebook", "instagram")
+
     init {
         loadApps()
     }
 
     private fun loadApps() {
-        // Query PackageManager for all apps in the launcher category
         val pm = context.packageManager
         val intent = Intent(Intent.ACTION_MAIN).apply {
             addCategory(Intent.CATEGORY_LAUNCHER)
@@ -47,19 +48,24 @@ class PackageManagerAppRepository(
         
         val currentHidden = getHiddenApps()
         val currentFavorites = getFavoriteApps()
+        val currentGatekept = getGatekeptApps()
 
         val appList = resolveInfos.mapNotNull { resolveInfo ->
             val pkgName = resolveInfo.activityInfo.packageName
-            // Filter out our own launcher to prevent recursive loops
             if (pkgName == context.packageName) return@mapNotNull null
+            
+            val label = resolveInfo.loadLabel(pm).toString()
+            val isDefaultGatekept = defaultProblematicApps.any { label.contains(it, ignoreCase = true) }
+            val isGatekept = currentGatekept.contains(pkgName) || isDefaultGatekept
             
             AppInfo(
                 packageName = pkgName,
-                label = resolveInfo.loadLabel(pm).toString(),
+                label = label,
                 icon = resolveInfo.loadIcon(pm),
                 launchIntent = pm.getLaunchIntentForPackage(pkgName),
                 isHidden = currentHidden.contains(pkgName),
-                isFavorite = currentFavorites.any { pkgName.contains(it) } 
+                isFavorite = currentFavorites.any { pkgName.contains(it) },
+                isGatekept = isGatekept
             )
         }.sortedBy { it.label.lowercase() }
         
@@ -73,7 +79,10 @@ class PackageManagerAppRepository(
             val current = getHiddenApps()
             if (hidden) current.add(packageName) else current.remove(packageName)
             prefs.edit().putStringSet("hidden_apps", current).apply()
-            loadApps()
+            
+            appsFlow.value = appsFlow.value.map {
+                if (it.packageName == packageName) it.copy(isHidden = hidden) else it
+            }
         }
     }
 
@@ -88,7 +97,23 @@ class PackageManagerAppRepository(
                 current.removeAll(toRemove.toSet())
             }
             prefs.edit().putStringSet("favorite_apps", current).apply()
-            loadApps()
+            
+            // Fast optimistic update
+            appsFlow.value = appsFlow.value.map {
+                if (it.packageName == packageName) it.copy(isFavorite = favorite) else it
+            }
+        }
+    }
+    
+    override suspend fun setAppGatekept(packageName: String, gatekept: Boolean) {
+        withContext(Dispatchers.IO) {
+            val current = getGatekeptApps()
+            if (gatekept) current.add(packageName) else current.remove(packageName)
+            prefs.edit().putStringSet("gatekept_apps", current).apply()
+            
+            appsFlow.value = appsFlow.value.map {
+                if (it.packageName == packageName) it.copy(isGatekept = gatekept) else it
+            }
         }
     }
 }

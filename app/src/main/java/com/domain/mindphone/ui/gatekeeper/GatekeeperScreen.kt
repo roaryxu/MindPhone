@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
@@ -68,7 +69,11 @@ fun GatekeeperScreen(
                     ) {
                         OutlinedTextField(
                             value = reason,
-                            onValueChange = { reason = it },
+                            onValueChange = { 
+                                if (it.length <= 25) {
+                                    reason = it
+                                }
+                            },
                             modifier = Modifier.weight(1f),
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedTextColor = Color.White,
@@ -79,8 +84,17 @@ fun GatekeeperScreen(
                             ),
                             shape = RoundedCornerShape(24.dp),
                             placeholder = { Text("Enter your reason...", color = Color.White.copy(alpha = 0.5f)) },
-                            singleLine = false,
-                            maxLines = 3
+                            singleLine = true,
+                            maxLines = 1,
+                            supportingText = {
+                                Text(
+                                    text = "${reason.length} / 25",
+                                    color = if (reason.length == 25) MaterialTheme.colorScheme.error else Color.White.copy(alpha = 0.5f),
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.End
+                                )
+                            }
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
