@@ -4,10 +4,9 @@
 [![Kotlin](https://img.shields.io/badge/kotlin-1.9.0-blue.svg)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-2023.08.00-green.svg)](https://developer.android.com/jetpack/compose)
 
-**MindPhone** is a premium, high-performance, minimalist Android launcher designed to reclaim your focus. By stripping away distractions and focusing on a clean, search-driven interface, MindPhone turns your smartphone back into a tool, not a slot machine.
+**MindPhone** is a premium, high-performance, minimalist Android launcher designed to reclaim your focus. By stripping away distractions and focusing on a clean, search-driven interface, MindPhone turns your smartphone back into a tool, not a slot machine. *The latest version of the repo includes an AI Gatekeeper for opening problematic apps via local SLM.*
 
-![Screenshot](https://github.com/user-attachments/assets/ab8717a4-b17c-403d-b68e-eee7220e5763)
-
+<img width="1080" height="1920" alt="HomeScreen" src="https://github.com/user-attachments/assets/37bd9bd7-c2c6-446c-950b-2855bb110fb4" />
 
 ## ✨ Features
 
@@ -18,6 +17,8 @@
 - **Privacy Only**: No telemetry, no tracking, and no internet permission required, at any time.
 - **Clean Aesthetics**: Built with a "Warm Sienna" (#C48B6C) accent palette on true black.
 
+<img width="1080" height="1920" alt="AppList" src="https://github.com/user-attachments/assets/a062332d-b80e-4c5e-858e-c5144d213971" />
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -26,14 +27,14 @@
 
 ### Installation
 
-#### 📦 Direct APK (Easiest for Mobile)
+#### 📦 Direct APK (Easiest for Mobile) *does not include AI Gatekeeper*
 If you're viewing this page on your Android device, you can install MindPhone immediately:
 1. Navigate to the [**Releases**](https://github.com/roaryxu/MindPhone/releases) page.
 2. Download the latest `.apk` directly to your phone.
 3. Open the downloaded file. If prompted, allow "Install from Unknown Sources" for your browser.
 4. Once installed, press the **Home** button on your device and select **MindPhone** as your default launcher.
 
-#### 🛠 Build from Source
+#### 🛠 Build from Source *use the AI Gatekeeper with your own SLM*
 1. Clone this repository:
    ```bash
    git clone https://github.com/roaryxu/MindPhone.git
@@ -42,6 +43,9 @@ If you're viewing this page on your Android device, you can install MindPhone im
 3. Build the project and run it on your device/emulator.
 4. Set **MindPhone** as your default launcher in Android Settings.
 
+<img width="1080" height="1920" alt="AIgatekeeper" src="https://github.com/user-attachments/assets/bca8fcfa-04c0-42bf-bd5f-862a68c6bbde" />
+
+
 ## 🛠 Tech Stack
 - **Language**: Kotlin
 - **UI Framework**: Jetpack Compose (Material 3)
@@ -49,11 +53,15 @@ If you're viewing this page on your Android device, you can install MindPhone im
 - **Persistence**: SharedPreferences (for lightweight state management)
 - **Concurrency**: Kotlin Coroutines & Flow
 
+<img width="1080" height="1920" alt="AppRefused" src="https://github.com/user-attachments/assets/d55ca114-bb27-46e8-a770-5b8a717ac404" />
+
 ## 🎨 Design Philosophy
 MindPhone follows a "Focus-First" design philosophy:
 - **No Icons on Home**: Text-based lists reduce the visual "pull" of addictive apps.
 - **Haptic Feedback**: Subtle vibrations (where supported) for navigation.
 - **Easter Egg**: Hold down the drawer icon to cycle through 3 different colour accents.
+
+<img width="1080" height="1920" alt="SystemPrompt" src="https://github.com/user-attachments/assets/c08c8665-b202-4c15-bfdb-9bad87a2e7ab" />
 
 ## 🤝 Contributing
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -63,9 +71,6 @@ Contributions are what make the open-source community such an amazing place to l
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## 📄 License
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 *Sharing for free because mindfulness belongs to everyone.*
